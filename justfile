@@ -10,15 +10,13 @@ copy        := if os() == "linux" { "xsel -ib"} else { "pbcopy" }
 argocd_port  := "30950"
 cluster_name := "control-plane"
 
-export gcp_provider_version     := "v0.15.0"
-
 # this list of available targets
 # targets marked with * are main targets
 default:
   @just --list --unsorted
 
 # * setup kind cluster with GCP official provider and ArgoCD
-setup_infra: setup_kind setup_uxp setup_argo 
+setup: setup_kind setup_uxp setup_argo 
 
 # setup kind cluster
 setup_kind:
