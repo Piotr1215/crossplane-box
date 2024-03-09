@@ -13,7 +13,7 @@ cluster_name := "control-plane"
 # this list of available targets
 # targets marked with * are main targets
 default:
-  @just --list --unsorted
+  just --list --unsorted
 
 # * setup kind cluster with GCP official provider and ArgoCD
 setup: setup_kind setup_uxp setup_argo 
@@ -44,28 +44,37 @@ setup_uxp xp_namespace='crossplane-system':
 
 # setup ArgoCD and patch server service to nodePort 30950
 setup_argo:
-  @echo "Installing ArgoCD"
-  @kubectl create namespace argocd
-  @kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
-  @kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
-  @kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
-  @kubectl patch svc argocd-server -n argocd --type merge --type='json' -p='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value": {{argocd_port}}}]'
+  #!/usr/bin/env bash
+  echo "Installing ArgoCD"
+  if kubectl get namespace argocd > /dev/null 2>&1; then
+    echo "Namespace argocd already exists"
+  else
+    echo "Creating namespace argocd"
+    kubectl create namespace argocd
+  fi
+  kubectl create namespace argocd
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
+  kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+  kubectl patch svc argocd-server -n argocd --type merge --type='json' -p='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value": {{argocd_port}}}]'
+  kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-applicationset-controller --namespace argocd
+  kubectl patch deployment argocd-applicationset-controller -n argocd --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--app-resync=30"}]'
 
 # copy ArgoCD server secret to clipboard and launch browser, user admin, pw paste from clipboard
 launch_argo:
-  @kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | {{copy}}
-  @nohup {{browse}} http://localhost:{{argocd_port}} >/dev/null 2>&1 &
+  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | {{copy}}
+  nohup {{browse}} http://localhost:{{argocd_port}} >/dev/null 2>&1 &
 
 # bootstrap ArgoCD apps
 bootstrap_apps:
-  @kubectl apply -f bootstrap.yaml
+  kubectl apply -f bootstrap.yaml
 
 # * delete KIND cluster
 teardown:
-  @echo "Delete KIND cluster"
-  @kind delete clusters control-plane
+  echo "Delete KIND cluster"
+  kind delete clusters control-plane
 
 _create_repo_secret:
-  @echo "Creating repo secret"
-  @kubectl apply -f ./secrets/repo-deploy-secret.yaml
+  echo "Creating repo secret"
+  kubectl apply -f ./secrets/repo-deploy-secret.yaml
 
