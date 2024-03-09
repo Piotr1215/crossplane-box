@@ -15,7 +15,7 @@ argocd_port   := "30950"
 default:
   just --list --unsorted
 
-# * setup kind cluster with crossplane/usp and ArgoCD
+# * setup kind cluster with uxp, ArgoCD and launch argocd in browser
 setup: _replace_repo_user setup_kind setup_uxp setup_argo launch_argo
 
 # replace repo user
