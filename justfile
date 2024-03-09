@@ -2,7 +2,6 @@ set export
 set shell := ["bash", "-uc"]
                                  
 yaml          := justfile_directory() + "/yaml"
-scripts       := justfile_directory() + "/scripts"
 apps          := justfile_directory() + "/apps"
               
 browse        := if os() == "linux" { "xdg-open "} else { "open" }
@@ -70,15 +69,13 @@ setup_argo:
   kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
   kubectl patch svc argocd-server -n argocd --type merge --type='json' -p='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value": {{argocd_port}}}]'
-  kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-applicationset-controller --namespace argocd
-  kubectl patch deployment argocd-applicationset-controller -n argocd --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--app-resync=30"}]'
 
 # copy ArgoCD server secret to clipboard and launch browser, user admin, pw paste from clipboard
 launch_argo:
   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | {{copy}}
   nohup {{browse}} https://localhost:{{argocd_port}} >/dev/null 2>&1 &
 
-# bootstrap ArgoCD apps
+# bootstrap ArgoCD apps and set reconcilation timer to 30 seconds
 bootstrap_apps:
   kubectl apply -f bootstrap.yaml
 
