@@ -72,8 +72,10 @@ setup_argo:
 
 # copy ArgoCD server secret to clipboard and launch browser, user admin, pw paste from clipboard
 launch_argo:
+  #!/usr/bin/env bash
   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | {{copy}}
-  nohup {{browse}} https://localhost:{{argocd_port}} >/dev/null 2>&1 &
+  sleep 3
+  nohup {{browse}} http://localhost:{{argocd_port}} >/dev/null 2>&1 &
 
 # bootstrap ArgoCD apps and set reconcilation timer to 30 seconds
 bootstrap_apps:

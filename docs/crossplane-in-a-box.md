@@ -144,7 +144,10 @@ Running the last command will do the following:
 > - username: **admin**
 > - password: **should be in your clipboard** so just paste it in the `password` text box. In case this didn't work, you can run `@kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d` to get the password.
 
-ℹ️Typing `just<TAB>` will show all available just recipes. Here is the list:
+ℹ️
+This setup is meant to be quick and easy, focusing on getting you started without dealing with HTTPS certificates. If you're interested in a more secure setup with HTTPS for local development, you might explore using mkcert. It requires a bit more work, as everyone needs to run mkcert on their machine to create and trust their certificates
+
+Typing `just<TAB>` will show all available just recipes. Here is the list:
 
 ```just
 Available recipes:
@@ -189,6 +192,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ```
+
 Notice that the `apps` directory already contains an app that points to the
 `yaml` folder with crossplane functions and providers. Adding to this directory
 and pushing the changes to the repository will automatically deploy the new
@@ -200,7 +204,6 @@ cluster by running the following command:
 ```bash
 just bootstrap_apps
 ```
-
 
 This will deploy all the apps from the `apps` folder and the content of the
 `yaml` folder into the cluster via ArgoCD.
