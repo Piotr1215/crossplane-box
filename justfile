@@ -15,8 +15,8 @@ argocd_port   := "30950"
 default:
   just --list --unsorted
 
-# * setup kind cluster with uxp, ArgoCD and launch argocd in browser
-setup: _replace_repo_user setup_kind setup_uxp setup_argo launch_argo
+# * setup kind cluster with crossplane, ArgoCD and launch argocd in browser
+setup: _replace_repo_user setup_kind setup_crossplane setup_argo launch_argo
 
 # replace repo user
 _replace_repo_user:
@@ -41,7 +41,7 @@ setup_kind cluster_name='control-plane':
   kubectl config use-context kind-{{cluster_name}}
 
 # setup universal crossplane
-setup_uxp xp_namespace='crossplane-system':
+setup_crossplane xp_namespace='crossplane-system':
   #!/usr/bin/env bash
   if kubectl get namespace {{xp_namespace}} > /dev/null 2>&1; then
     echo "Namespace {{xp_namespace}} already exists"
@@ -50,8 +50,10 @@ setup_uxp xp_namespace='crossplane-system':
     kubectl create namespace {{xp_namespace}}
   fi
 
-  echo "Installing UXP version"
-  helm upgrade --install uxp --namespace {{xp_namespace}} upbound-stable/universal-crossplane --devel
+  echo "Installing crossplane version"
+  helm repo add crossplane-stable https://charts.crossplane.io/stable
+  helm repo update
+  helm upgrade --install crossplane --namespace {{xp_namespace}} crossplane-stable/crossplane --devel
   kubectl wait --for condition=Available=True --timeout=300s deployment/crossplane --namespace {{xp_namespace}}
 
 # setup ArgoCD and patch server service to nodePort 30950
@@ -64,7 +66,6 @@ setup_argo:
     echo "Creating namespace argocd"
     kubectl create namespace argocd
   fi
-  kubectl create namespace argocd
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
   kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
@@ -80,6 +81,13 @@ launch_argo:
 # bootstrap ArgoCD apps and set reconcilation timer to 30 seconds
 bootstrap_apps:
   kubectl apply -f bootstrap.yaml
+
+# sync apps locally
+sync:
+  #!/usr/bin/env bash
+  export argo_pw=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+  yes | argocd login localhost:{{argocd_port}} --username admin --password "${argo_pw}"
+  argocd app sync bootstrap --prune --local ./apps 
 
 # * delete KIND cluster
 teardown:
