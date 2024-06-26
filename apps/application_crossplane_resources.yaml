@@ -20,6 +20,8 @@ spec:
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: 'bootstrap:s3.aws.upbound.io/Bucket:argocd/'
   generateName: crossplane-bucket-Sentgit
 spec:
   forProvider:
