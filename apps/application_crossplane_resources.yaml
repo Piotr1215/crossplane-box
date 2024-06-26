@@ -22,7 +22,7 @@ kind: Bucket
 metadata:
   annotations:
     argocd.argoproj.io/tracking-id: 'bootstrap:s3.aws.upbound.io/Bucket:argocd/'
-  name: crossplane-bucket-Sentgit
+  name: crossplane-bucket-sentgit
 spec:
   forProvider:
     region: us-east-2
