@@ -11,3 +11,10 @@ metadata:
   name: provider-aws-account
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-account:v0.47.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  [200~cat <<EOF | kubectl apply -f -name: provider-aws-s3
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-s3:v1.1.0
