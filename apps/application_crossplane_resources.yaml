@@ -16,3 +16,13 @@ spec:
     automated:
       selfHeal: true
       prune: true
+---
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  generateName: crossplane-bucket-Sentgit
+spec:
+  forProvider:
+    region: us-east-2
+  providerConfigRef:
+    name: default
