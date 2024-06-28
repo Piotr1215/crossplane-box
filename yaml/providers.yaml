@@ -30,3 +30,10 @@ spec:
       namespace: crossplane-system
       name: aws-secret
       key: creds
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-ec2
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-ec2:v1.8.0
