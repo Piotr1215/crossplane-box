@@ -33,10 +33,10 @@ apiVersion: ec2.aws.upbound.io/v1beta1
 kind: Instance
 metadata:
   annotations:
-    argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/crossplanetest'
+    argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
   labels:
     testing.upbound.io/example-name: instance
-  name: crossplanetest
+  name: instance
   namespace: argocd
 spec:
   forProvider:
