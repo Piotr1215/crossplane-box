@@ -9,5 +9,14 @@ spec:
   resources:
     - name: s3bucket
       base:
-        apiVersion: s3.aws.upbound.iop/v1alpha1
+        apiVersion: s3.aws.upbound.io/v1beta1
         kind: Bucket
+        metadata:
+          annotations:
+            argocd.argoproj.io/tracking-id: 'bootstrap:s3.aws.upbound.io/Bucket:argocd/'
+          name: crossplane-bucket-sentgit
+spec:
+  forProvider:
+    region: us-east-2
+  providerConfigRef:
+    name: default
