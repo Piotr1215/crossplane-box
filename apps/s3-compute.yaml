@@ -1,11 +1,11 @@
-apiversion: apiextensions.crossplane.io/v1
+apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
   name: s3-compute
 spec:
   compositeTypeRef:
     apiVersion: api.example.org/v1alpha1
-    kind: database
+    kind: strgcompute
   resources:
     - name: s3bucket
       base:
@@ -28,9 +28,9 @@ spec:
           annotations:
             argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
           labels:
-            testing.upbound.io/example-name: instance2
-          name: instance2
-          namespace: argocd
+            testing.upbound.io/example-name: instance
+          name: instance
+          #namespace: argocd
         spec:
           forProvider:
             ami: ami-0e06fa29a08d84162
@@ -38,3 +38,5 @@ spec:
             region: us-east-2
             tags:
               type: upbound-test-instance
+           providerConfigRef:
+            name: default
