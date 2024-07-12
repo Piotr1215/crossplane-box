@@ -1,0 +1,13 @@
+apiversion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: dynamodb-s3
+spec:
+  compositeTypeRef:
+    apiVersion: api.example.org/v1alpha1
+    kind: database
+  resources:
+    - name: s3bucket
+      base:
+        apiVersion: s3.aws.upbound.iop/v1alpha1
+        kind: Bucket
