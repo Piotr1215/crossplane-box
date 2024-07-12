@@ -1,0 +1,40 @@
+apiversion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: s3-compute
+spec:
+  compositeTypeRef:
+    apiVersion: api.example.org/v1alpha1
+    kind: database
+  resources:
+    - name: s3bucket
+      base:
+        apiVersion: s3.aws.upbound.io/v1beta1
+        kind: Bucket
+        metadata:
+          annotations:
+            argocd.argoproj.io/tracking-id: 'bootstrap:s3.aws.upbound.io/Bucket:argocd/'
+          name: crossplane-bucket-sentgitjul
+        spec:
+          forProvider:
+            region: us-east-2
+          providerConfigRef:
+            name: default
+    - name: compute
+      base:
+        apiVersion: ec2.aws.upbound.io/v1beta1
+        kind: Instance
+        metadata:
+          annotations:
+            argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
+          labels:
+            testing.upbound.io/example-name: instance2
+          name: instance2
+          namespace: argocd
+        spec:
+          forProvider:
+            ami: ami-0e06fa29a08d84162
+            instanceType: t2.micro
+            region: us-east-2
+            tags:
+              type: upbound-test-instance
