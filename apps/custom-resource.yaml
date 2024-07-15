@@ -1,6 +1,6 @@
-#apiVersion: api.example.org/v1alpha1
-#kind: NoSQL
-#metadata:
-#  name: strgcompute
-#spec: 
-#  location: "US"
+apiVersion: api.example.org/v1alpha1
+kind: NoSQL
+metadata:
+  name: strgcompute
+spec: 
+  location: "US"
