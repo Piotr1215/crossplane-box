@@ -21,14 +21,14 @@ spec:
           providerConfigRef:
             name: default
       patches:
-      - type: FromCompositeFieldPath
-        fromFieldPath: "spec.location"
-        toFieldPath: "spec.forProvider.region"
-        transforms:
-          - type: map
-             map: 
-               EU: "eu-north-1"
-               US: "us-east-2"
+       - type: FromCompositeFieldPath
+         fromFieldPath: "spec.location"
+         toFieldPath: "spec.forProvider.region"
+         transforms:
+           - type: map
+              map: 
+                EU: "eu-north-1"
+                US: "us-east-2"
     - name: compute
       base:
         apiVersion: ec2.aws.upbound.io/v1beta1
@@ -48,11 +48,11 @@ spec:
             tags:
               type: upbound-test-instance
       patches:
-      - type: FromCompositeFieldPath
-        fromFieldPath: "spec.location"
-        toFieldPath: "spec.forProvider.region"
-        transforms:
-          - type: map
-             map: 
-               EU: "eu-north-1"
-               US: "us-east-2"
+       - type: FromCompositeFieldPath
+         fromFieldPath: "spec.location"
+         toFieldPath: "spec.forProvider.region"
+         transforms:
+           - type: map
+              map: 
+                EU: "eu-north-1"
+                US: "us-east-2"
