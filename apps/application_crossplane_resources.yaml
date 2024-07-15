@@ -29,19 +29,19 @@ spec:
   providerConfigRef:
     name: default
 ---
-apiVersion: ec2.aws.upbound.io/v1beta1
-kind: Instance
-metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
-  labels:
-    testing.upbound.io/example-name: instance
-  name: instance
-  namespace: argocd
-spec:
-  forProvider:
-    ami: ami-0e06fa29a08d84162
-    instanceType: t2.micro
-    region: us-east-2
-    tags:
-      type: upbound-test-instance
+#apiVersion: ec2.aws.upbound.io/v1beta1
+#kind: Instance
+#metadata:
+#  annotations:
+#    argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
+#  labels:
+#    testing.upbound.io/example-name: instance
+#  name: instance
+#  namespace: argocd
+#spec:
+#  forProvider:
+#    ami: ami-0e06fa29a08d84162
+#    instanceType: t2.micro
+#    region: us-east-2
+#    tags:
+#      type: upbound-test-instance
