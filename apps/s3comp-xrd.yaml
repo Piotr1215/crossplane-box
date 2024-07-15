@@ -16,13 +16,13 @@ spec:
           spec:
             type: object
             properties:
-              region:
+              location:
                 type: string
                 oneOf:
                   - pattern: '^EU$'
                   - pattern: '^US$'
             required:
-              - region
+              - location
     served: true
     referenceable: true
   claimNames:
