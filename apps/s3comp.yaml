@@ -21,11 +21,11 @@ spec:
           providerConfigRef:
             name: default
       patches:
-       - type: FromCompositeFieldPath
-         fromFieldPath: "spec.location"
-         toFieldPath: "spec.forProvider.region"
-         transforms:
-           - type: map
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.location"
+          toFieldPath: "spec.forProvider.region"
+          transforms:
+            - type: map
               map: 
                 EU: "eu-north-1"
                 US: "us-east-2"
@@ -48,11 +48,11 @@ spec:
             tags:
               type: upbound-test-instance
       patches:
-       - type: FromCompositeFieldPath
-         fromFieldPath: "spec.location"
-         toFieldPath: "spec.forProvider.region"
-         transforms:
-           - type: map
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.location"
+          toFieldPath: "spec.forProvider.region"
+          transforms:
+            - type: map
               map: 
                 EU: "eu-north-1"
                 US: "us-east-2"
