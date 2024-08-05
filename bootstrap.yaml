@@ -30,7 +30,7 @@ spec:
   project: default
   source:
     path: app1
-    repoURL: https://github.com/Piotr1215/crossplane-box
+    repoURL: https://github.com/git2senthil/crossplane-box
     targetRevision: HEAD
   syncPolicy:
     automated:
@@ -50,7 +50,7 @@ spec:
   project: default
   source:
     path: app2
-    repoURL: https://github.com/Piotr1215/crossplane-box
+    repoURL: https://github.com/git2senthil/crossplane-box
     targetRevision: HEAD
   syncPolicy:
     automated:
