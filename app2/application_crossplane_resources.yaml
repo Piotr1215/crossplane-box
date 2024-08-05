@@ -22,6 +22,7 @@ spec:
   compositionUpdatePolicy: Manual
   compositionRevisionRef:
     name: s3-compute-73e0f24
+  name: strgcompute-app231
 ---
 apiVersion: api.example.org/v1alpha1
 kind: strgcompute
