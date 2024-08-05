@@ -4,10 +4,3 @@ metadata:
   name: strgcompute-app2
 spec: 
   location: "US"
----
-apiVersion: api.example.org/v1alpha1
-kind: strgcompute
-metadata:
-  name: strgcompute-app21
-spec: 
-  location: "US"

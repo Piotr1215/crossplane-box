@@ -21,8 +21,11 @@ spec:
                 oneOf:
                   - pattern: '^EU$'
                   - pattern: '^US$'
+              name:
+                type: string
             required:
               - location
+              - name
     served: true
     referenceable: true
   claimNames:

@@ -29,6 +29,9 @@ spec:
               map: 
                 EU: "eu-north-1"
                 US: "us-east-2"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.name"
     # - name: compute
     #   base:
     #     apiVersion: ec2.aws.upbound.io/v1beta1
