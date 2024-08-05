@@ -29,30 +29,30 @@ spec:
               map: 
                 EU: "eu-north-1"
                 US: "us-east-2"
-    - name: compute
-      base:
-        apiVersion: ec2.aws.upbound.io/v1beta1
-        kind: Instance
-        metadata:
-          annotations:
-            argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
-          labels:
-            testing.upbound.io/example-name: instance
-          name: instance
-          #namespace: argocd
-        spec:
-          forProvider:
-            ami: ami-0e06fa29a08d84162
-            instanceType: t2.micro
-            region: us-east-1
-            tags:
-              type: upbound-test-instance
-      patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: "spec.location"
-          toFieldPath: "spec.forProvider.region"
-          transforms:
-            - type: map
-              map: 
-                EU: "eu-north-1"
-                US: "us-east-2"
+    # - name: compute
+    #   base:
+    #     apiVersion: ec2.aws.upbound.io/v1beta1
+    #     kind: Instance
+    #     metadata:
+    #       annotations:
+    #         argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
+    #       labels:
+    #         testing.upbound.io/example-name: instance
+    #       name: instance
+    #       #namespace: argocd
+    #     spec:
+    #       forProvider:
+    #         ami: ami-0e06fa29a08d84162
+    #         instanceType: t2.micro
+    #         region: us-east-1
+    #         tags:
+    #           type: upbound-test-instance
+    #   patches:
+    #     - type: FromCompositeFieldPath
+    #       fromFieldPath: "spec.location"
+    #       toFieldPath: "spec.forProvider.region"
+    #       transforms:
+    #         - type: map
+    #           map: 
+    #             EU: "eu-north-1"
+    #             US: "us-east-2"
