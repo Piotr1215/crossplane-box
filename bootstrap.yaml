@@ -18,46 +18,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: app1
-  namespace: argocd
-spec:
-  destination:
-    namespace: argocd
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    path: app1
-    repoURL: https://github.com/git2senthil/crossplane-box
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: app2
-  namespace: argocd
-spec:
-  destination:
-    namespace: argocd
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    path: app2
-    repoURL: https://github.com/git2senthil/crossplane-box
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
