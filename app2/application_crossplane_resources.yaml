@@ -4,3 +4,9 @@ metadata:
   name: strgcompute-app2
 spec: 
   location: "US"
+---
+apiVersion: api.example.org/v1alpha1
+kind: strgcompute
+spec: 
+  location: "US"
+  name: strgcompute-app22
