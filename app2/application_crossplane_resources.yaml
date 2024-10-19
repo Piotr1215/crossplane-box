@@ -1,0 +1,33 @@
+#apiVersion: api.example.org/v1alpha1
+# kind: strgcompute
+# metadata:
+#   name: strgcompute-app2
+# spec: 
+#   location: "US"
+# ---
+# apiVersion: api.example.org/v1alpha1
+# kind: strgcompute
+# metadata:
+#   name: strgcompute-app21
+# spec: 
+#   location: "US"
+#   name: strgcompute-app22
+# ---
+# apiVersion: api.example.org/v1alpha1
+# kind: strgcompute
+# metadata:
+#   name: strgcompute-app23
+# spec: 
+#   location: "US"
+#   compositionUpdatePolicy: Manual
+#   compositionRevisionRef:
+#     name: s3-compute-73e0f24
+#   name: strgcompute-app231
+# ---
+# apiVersion: api.example.org/v1alpha1
+# kind: strgcompute
+# metadata:
+#   name: strgcompute-app24
+# spec: 
+#   location: "US"
+#   name: strgcompute-app241

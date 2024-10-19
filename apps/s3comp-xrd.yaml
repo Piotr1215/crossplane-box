@@ -1,0 +1,33 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: strgcomputes.api.example.org
+spec:
+  group: api.example.org
+  names:
+    kind: strgcompute
+    plural: strgcomputes
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              location:
+                type: string
+                oneOf:
+                  - pattern: '^EU$'
+                  - pattern: '^US$'
+              name:
+                type: string
+            required:
+              - location
+              - name
+    served: true
+    referenceable: true
+  claimNames:
+    kind: custom-strgcompute
+    plural: custom-strgcomputes

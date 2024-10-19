@@ -16,3 +16,72 @@ spec:
     automated:
       selfHeal: true
       prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app1
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: app1
+    repoURL: https://github.com/git2senthil/crossplane-box
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app2
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: app2
+    repoURL: https://github.com/git2senthil/crossplane-box
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+# apiVersion: s3.aws.upbound.io/v1beta1
+# kind: Bucket
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/tracking-id: 'bootstrap:s3.aws.upbound.io/Bucket:argocd/'
+#   name: crossplane-bucket-sentgit
+# spec:
+#   forProvider:
+#     region: us-east-2
+#   providerConfigRef:
+#     name: default
+---
+# apiVersion: ec2.aws.upbound.io/v1beta1
+# kind: Instance
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/tracking-id: 'bootstrap:ec2.aws.upbound.io/Instance:argocd/'
+#   labels:
+#     testing.upbound.io/example-name: instance
+#   name: instance
+#   namespace: argocd
+# spec:
+#   forProvider:
+#     ami: ami-0e06fa29a08d84162
+#     instanceType: t2.micro
+#     region: us-east-2
+#     tags:
+#       type: upbound-test-instance
